@@ -1,0 +1,149 @@
+package madgui;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL33.*;
+
+import java.io.IOException;
+import java.util.Vector;
+
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL33;
+public class Renderer {
+	
+	//########## Internal Data members ##########
+	private int mWidth,mHeight;
+	private String mWindowTitle;
+	private long mWindow;
+	private Shader mShader=new Shader();
+	Vector<Texture> mTextureVector = new Vector<>();
+	
+//	UI element holders
+	Vector<Quad> mUIQuadVector = new Vector<>();
+	VertexArray mUIVertexArray = new VertexArray();
+	
+//	Viewport element holders
+	Vector<Quad> mVQuadVector = new Vector<>();
+	VertexArray mVVertexArray = new VertexArray();
+	
+	//########## External public functionality ##########
+	
+	public Renderer(int width,int height, String title) {
+		mWidth = width;
+		mHeight = height;
+		mWindowTitle = title;
+	}
+	
+	public  Renderer() {
+		this(1280, 720, "GameWindow");
+	}
+	
+	public boolean init() {
+		if (!glfwInit()) {
+			throw new IllegalStateException("cannot init glfw");
+		}
+		
+		glfwWindowHint(GLFW_RESIZABLE, 0);
+		glfwWindowHint(GLFW_MAXIMIZED, 1);
+		mWindow = glfwCreateWindow(mWidth,mHeight, mWindowTitle, 0, 0);
+//		long mCursor = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+//		glfwSetCursor(mWindow, mCursor);
+		
+		if (mWindow==0) {
+			throw new IllegalStateException("cannot start window");
+		}
+		
+		//create opengl context
+		glfwMakeContextCurrent(mWindow);
+		GL.createCapabilities();
+		
+		//set colour buffer data
+		glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
+		
+		//make window visible
+		glfwShowWindow(mWindow);
+		
+		return true;
+	}
+	
+	public void runloop() {
+		while (!glfwWindowShouldClose(mWindow)) {
+			ProcessInput();
+			ProcessOutput();
+		}
+		
+	}
+	
+	public void terminate() {
+		mShader.delete();
+		mUIVertexArray.delete();
+		for(int i=0;i<mTextureVector.size();i++) {
+			mTextureVector.get(i).delete();
+		}
+//		plane.delete();
+		glfwTerminate();
+	}
+	
+	public void initShader(String vs,String fs) throws IOException {
+		mShader.load(vs, fs);
+	}
+	
+	public void initVertexArray() {
+		mUIVertexArray.init(mUIQuadVector);
+		mVVertexArray.init(mVQuadVector);
+	}
+	
+	//########## Internal private functionality ##########
+	
+//	Drawing functions
+	private void DrawViewPort() {
+		for(int i=0;i<mTextureVector.size();i++) {
+			mTextureVector.get(i).setActive();
+		}
+		mShader.setActive();
+		mVVertexArray.setActive();
+		GL33.glDrawElements(GL33.GL_TRIANGLES, mVVertexArray.getVertexCount(), GL33.GL_UNSIGNED_INT, 0);
+	}
+	
+	private void DrawUI() {
+		for(int i=0;i<mTextureVector.size();i++) {
+			mTextureVector.get(i).setActive();
+		}
+		mShader.setActive();
+		mUIVertexArray.setActive();
+		GL33.glDrawElements(GL33.GL_TRIANGLES, mUIVertexArray.getVertexCount(), GL33.GL_UNSIGNED_INT, 0);
+	}
+	
+	private void ProcessOutput() {
+		
+		glClear(GL_COLOR_BUFFER_BIT);
+		
+		DrawViewPort();
+		DrawUI();
+		
+		glfwSwapBuffers(mWindow);
+		
+	}
+	
+	private void addElement() {
+		Quad temp = new Quad(0.0f,0.0f,0.3f,0.3f);
+		temp.setTexture(1.0f);
+		mVQuadVector.add(temp);
+		initVertexArray();
+	}
+	
+	private void ProcessInput() {
+		glfwPollEvents();
+		
+		//add key maps here
+		if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE)==1) {
+			glfwSetWindowShouldClose(mWindow,true);
+		}
+		
+		if (glfwGetKey(mWindow, GLFW_KEY_A)==1) {
+			addElement();
+		}
+		
+	}
+	
+	
+	
+}
