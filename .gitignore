@@ -1,0 +1,13 @@
+
+src/F2IBuilder/.DS_Store
+src/F2IBuilder/copying
+src/F2IBuilder/F2IBuilder.bat
+src/F2IBuilder/f2ibuilder.ico
+src/F2IBuilder/F2IBuilder.jar
+src/F2IBuilder/f2ibuilder.jpg
+src/F2IBuilder/F2IBuilder.sh
+src/F2IBuilder/lib/.DS_Store
+src/F2IBuilder/lib/dukitan-componentes.jar
+src/F2IBuilder/lib/jdom.jar
+src/swingTrial/SwingTrial.java
+bin/swingTrial/SwingTrial.class
