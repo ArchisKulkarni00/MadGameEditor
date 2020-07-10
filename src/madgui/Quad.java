@@ -55,13 +55,8 @@ public class Quad {
 		mVertices[3+18]=x+width; mVertices[4+18]=y+height;
 	}
 	
+	
 	public float[] getVertices() {
-		for (int i = 0; i < mVertices.length; i++) {
-			//System.out.println(mVertices[i]);
-		}
-//		System.out.println("\n\n");
 		return mVertices;
 	}
-	
-	
 }

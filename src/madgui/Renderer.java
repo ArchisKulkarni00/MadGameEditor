@@ -16,6 +16,10 @@ public class Renderer {
 	private Shader mShader=new Shader();
 	Vector<Texture> mTextureVector = new Vector<>();
 	
+//	text element holders
+	Vector<Quad> mTextVector = new Vector<>();
+	VertexArray mTextVertexArray = new VertexArray();
+	
 //	UI element holders
 	Vector<Quad> mUIQuadVector = new Vector<>();
 	VertexArray mUIVertexArray = new VertexArray();
@@ -89,6 +93,7 @@ public class Renderer {
 	public void initVertexArray() {
 		mUIVertexArray.init(mUIQuadVector);
 		mVVertexArray.init(mVQuadVector);
+		mTextVertexArray.init(mTextVector);
 	}
 	
 	//########## Internal private functionality ##########
@@ -112,12 +117,25 @@ public class Renderer {
 		GL33.glDrawElements(GL33.GL_TRIANGLES, mUIVertexArray.getVertexCount(), GL33.GL_UNSIGNED_INT, 0);
 	}
 	
+	private void DrawText() {
+		GL33.glEnable(GL33.GL_BLEND);
+		GL33.glBlendFunc(GL33.GL_ONE, GL33.GL_ONE);
+		for(int i=0;i<mTextureVector.size();i++) {
+			mTextureVector.get(i).setActive();
+		}
+		mShader.setActive();
+		mTextVertexArray.setActive();
+		GL33.glDrawElements(GL33.GL_TRIANGLES, mTextVertexArray.getVertexCount(), GL33.GL_UNSIGNED_INT, 0);
+		GL33.glDisable(GL33.GL_BLEND);
+	}
+	
 	private void ProcessOutput() {
 		
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		DrawViewPort();
 		DrawUI();
+		DrawText();
 		
 		glfwSwapBuffers(mWindow);
 		

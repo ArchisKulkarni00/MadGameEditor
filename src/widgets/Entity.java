@@ -29,11 +29,6 @@ public class Entity {
 	public boolean isCursorOn() {
 		return isCursorOn;
 	}
-
-	
-//	private void checkIsCursorOn() {
-//		
-//	}
 	
 //	set the size in percentage relative to its parent
 	
