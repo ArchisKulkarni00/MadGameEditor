@@ -42,7 +42,7 @@ public class Main {
 		
 		Quad mQuad = new Quad(0.5f, 0.5f, 0.6f, 0.6f);
 		renderer.mVQuadVector.add(mQuad);
-		mQuad.setTexture(1);
+		mQuad.setTexture(2);
 		
 		Text mText = new Text("Archis Kulkarni",-0.5f,0.0f,0.6f,0.3f);
 		mText.push(renderer.mTextVector);

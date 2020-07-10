@@ -3,7 +3,7 @@
 in vec2 texCord;
 in float index;
 out vec4 color;
-uniform sampler2D TextureArray[2];
+uniform sampler2D TextureArray[8];
 
 void main()
 {

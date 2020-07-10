@@ -33,18 +33,19 @@ public class Shader {
 	
 	public void setUniform1iv() {
 		this.setActive();
-		int loc0 = GL33.glGetUniformLocation(shaderProgram, "TextureArray[0]");
-		GL33.glUniform1i(loc0, 0);
-		int loc1 = GL33.glGetUniformLocation(shaderProgram, "TextureArray[1]");
-		GL33.glUniform1i(loc1, 1);
-//		System.out.println("inside set uniform");
-//		int location = GL33.glGetUniformLocation(shaderProgram, "TextureArray");
-//		GL33.glUniform1i(location, 0);
+		int tempLocation;
+		for(int i=0;i<8;i++) {
+			tempLocation = GL33.glGetUniformLocation(shaderProgram, "TextureArray["+i+"]");
+			GL33.glUniform1i(tempLocation, i);
+		}
+//		int loc0 = GL33.glGetUniformLocation(shaderProgram, "TextureArray[0]");
+//		GL33.glUniform1i(loc0, 0);
+//		int loc1 = GL33.glGetUniformLocation(shaderProgram, "TextureArray[1]");
+//		GL33.glUniform1i(loc1, 1);
 	}
 	
 	
 	private String loadFiles(String path) throws IOException {
-		//String dataString = "";
 		return new String(Files.readAllBytes(Paths.get(path)));
 	}
 	
