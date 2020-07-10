@@ -5,8 +5,9 @@ import org.joml.Matrix4f;
 public class CameraOrtho2d {
 	
 	private Matrix4f projection;
-	int scale = 360;
+	int scale = 1000;
 	private boolean isEnabled;
+	int width,height;
 	
 	public CameraOrtho2d(int sWidth, int sHeight) {
 		setProjection(sWidth, sHeight);
@@ -14,6 +15,12 @@ public class CameraOrtho2d {
 	}
 	
 	public void setProjection(int width,int height) {
+		this.width = width;
+		this.height = height;
+		updateProjection();
+	}
+	
+	private void updateProjection() {
 		projection = new Matrix4f().ortho2D(-width/2, width/2, -height/2, height/2).scale(scale);
 	}
 	
@@ -22,7 +29,8 @@ public class CameraOrtho2d {
 	}
 
 	public void setScale(int scale) {
-		this.scale = scale;
+		this.scale = Math.abs(this.scale+scale);
+		updateProjection();
 	}
 
 	public Matrix4f getProjection() {

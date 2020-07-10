@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.GL33.*;
 import java.io.IOException;
 import java.util.Vector;
 
+import org.lwjgl.glfw.GLFWScrollCallback;
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL33;
 
@@ -16,6 +18,8 @@ public class Renderer {
 	private long mWindow;
 	private Shader mShader=new Shader();
 	private CameraOrtho2d mCamera = null;
+	private GLFWWindowSizeCallback windowSizeCallback = null;
+	private GLFWScrollCallback scrollCallback = null;
 	Vector<Texture> mTextureVector = new Vector<>();
 	
 //	text element holders
@@ -48,7 +52,7 @@ public class Renderer {
 		}
 		
 //		glfwWindowHint(GLFW_RESIZABLE, 0);
-//		glfwWindowHint(GLFW_MAXIMIZED, 1);
+		glfwWindowHint(GLFW_MAXIMIZED, 1);
 		mWindow = glfwCreateWindow(mWidth,mHeight, mWindowTitle, 0, 0);
 //		long mCursor = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
 //		glfwSetCursor(mWindow, mCursor);
@@ -63,6 +67,8 @@ public class Renderer {
 		
 		//set colour buffer data
 		glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
+		
+		setAllCallbacks();
 		
 		//make window visible
 		glfwShowWindow(mWindow);
@@ -110,6 +116,7 @@ public class Renderer {
 		for(int i=0;i<mTextureVector.size();i++) {
 			mTextureVector.get(i).setActive();
 		}
+		mShader.setCamera(mCamera.getProjection());
 		mShader.setActive();
 		mVVertexArray.setActive();
 		GL33.glDrawElements(GL33.GL_TRIANGLES, mVVertexArray.getVertexCount(), GL33.GL_UNSIGNED_INT, 0);
@@ -119,6 +126,7 @@ public class Renderer {
 		for(int i=0;i<mTextureVector.size();i++) {
 			mTextureVector.get(i).setActive();
 		}
+		mShader.disableCamera();
 		mShader.setActive();
 		mUIVertexArray.setActive();
 		GL33.glDrawElements(GL33.GL_TRIANGLES, mUIVertexArray.getVertexCount(), GL33.GL_UNSIGNED_INT, 0);
@@ -167,6 +175,35 @@ public class Renderer {
 			addElement();
 		}
 		
+	}
+	
+//	find all the required callbacks here
+	private void setAllCallbacks() {
+		windowSizeCallback = new GLFWWindowSizeCallback() {
+			
+			@Override
+			public void invoke(long window, int width, int height) {
+				mWidth=width;
+				mHeight=height;
+				glViewport(0, 0, width, height);
+				if (mCamera.isEnabled()) {
+					mCamera.setProjection(width, height);
+				}
+				System.out.println(mWidth+"  "+mHeight);
+				
+			}
+		};
+		
+		scrollCallback = new GLFWScrollCallback() {
+			
+			@Override
+			public void invoke(long window, double xoffset, double yoffset) {
+				mCamera.setScale((int)yoffset*50);
+			}
+		};
+		
+		glfwSetWindowSizeCallback(mWindow, windowSizeCallback);
+		glfwSetScrollCallback(mWindow, scrollCallback);
 	}
 	
 	

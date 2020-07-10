@@ -13,6 +13,7 @@ public class Shader {
 	
 	private int shaderProgram;
 	private String vertexShader,fragmentShader;
+	private Matrix4f identitiyMatrix4f = new Matrix4f(); 
 	
 	
 	public int getShaderProgram() {
@@ -42,10 +43,18 @@ public class Shader {
 			GL33.glUniform1i(tempLocation, i);
 		}
 	}
+	
 	public void setCamera(Matrix4f projection) {
 		int location = GL33.glGetUniformLocation(shaderProgram, "projection");
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
 		projection.get(buffer);
+		GL33.glUniformMatrix4fv(location, false, buffer);
+	}
+	
+	public void disableCamera() {
+		int location = GL33.glGetUniformLocation(shaderProgram, "projection");
+		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+		identitiyMatrix4f.get(buffer);
 		GL33.glUniformMatrix4fv(location, false, buffer);
 	}
 	

@@ -7,7 +7,7 @@ import widgets.PushButton;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		Renderer renderer = new Renderer(720,720,"GameWindow");
+		Renderer renderer = new Renderer(1920,1080,"GameWindow");
 		boolean isInitialized = renderer.init();
 		
 		renderer.initShader("Shaders/vs001", "Shaders/fs002");
