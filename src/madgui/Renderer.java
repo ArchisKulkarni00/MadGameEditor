@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL33;
+
 public class Renderer {
 	
 	//########## Internal Data members ##########
@@ -14,6 +15,7 @@ public class Renderer {
 	private String mWindowTitle;
 	private long mWindow;
 	private Shader mShader=new Shader();
+	private CameraOrtho2d mCamera = null;
 	Vector<Texture> mTextureVector = new Vector<>();
 	
 //	text element holders
@@ -45,8 +47,8 @@ public class Renderer {
 			throw new IllegalStateException("cannot init glfw");
 		}
 		
-		glfwWindowHint(GLFW_RESIZABLE, 0);
-		glfwWindowHint(GLFW_MAXIMIZED, 1);
+//		glfwWindowHint(GLFW_RESIZABLE, 0);
+//		glfwWindowHint(GLFW_MAXIMIZED, 1);
 		mWindow = glfwCreateWindow(mWidth,mHeight, mWindowTitle, 0, 0);
 //		long mCursor = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
 //		glfwSetCursor(mWindow, mCursor);
@@ -94,6 +96,11 @@ public class Renderer {
 		mUIVertexArray.init(mUIQuadVector);
 		mVVertexArray.init(mVQuadVector);
 		mTextVertexArray.init(mTextVector);
+	}
+	
+	public void enableCamera() {
+		mCamera = new CameraOrtho2d(mWidth, mHeight);
+		mShader.setCamera(mCamera.getProjection());
 	}
 	
 	//########## Internal private functionality ##########

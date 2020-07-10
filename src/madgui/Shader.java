@@ -1,9 +1,12 @@
 package madgui;
 
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL33;
 
 public class Shader {
@@ -38,10 +41,12 @@ public class Shader {
 			tempLocation = GL33.glGetUniformLocation(shaderProgram, "TextureArray["+i+"]");
 			GL33.glUniform1i(tempLocation, i);
 		}
-//		int loc0 = GL33.glGetUniformLocation(shaderProgram, "TextureArray[0]");
-//		GL33.glUniform1i(loc0, 0);
-//		int loc1 = GL33.glGetUniformLocation(shaderProgram, "TextureArray[1]");
-//		GL33.glUniform1i(loc1, 1);
+	}
+	public void setCamera(Matrix4f projection) {
+		int location = GL33.glGetUniformLocation(shaderProgram, "projection");
+		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+		projection.get(buffer);
+		GL33.glUniformMatrix4fv(location, false, buffer);
 	}
 	
 	

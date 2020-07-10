@@ -7,10 +7,11 @@ import widgets.PushButton;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		Renderer renderer = new Renderer(1920,1080,"GameWindow");
+		Renderer renderer = new Renderer(720,720,"GameWindow");
 		boolean isInitialized = renderer.init();
 		
 		renderer.initShader("Shaders/vs001", "Shaders/fs002");
+		renderer.enableCamera();
 		
 //		craeting ui
 		Layout layout = new Layout();
@@ -40,7 +41,7 @@ public class Main {
 //		craeting viewport
 		
 		
-		Quad mQuad = new Quad(0.5f, 0.5f, 0.6f, 0.6f);
+		Quad mQuad = new Quad(0.5f, 0.5f, 0.3f, 0.3f);
 		renderer.mVQuadVector.add(mQuad);
 		mQuad.setTexture(2);
 		
