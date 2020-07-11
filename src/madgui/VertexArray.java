@@ -50,13 +50,17 @@ public class VertexArray {
 		GL33.glBindBuffer(GL33.GL_ARRAY_BUFFER, vertexBufferID);
 		GL33.glBufferData(GL33.GL_ARRAY_BUFFER, verticesBuffer, GL33.GL_STATIC_DRAW);
 		GL33.glEnableVertexAttribArray(0);
-		GL33.glVertexAttribPointer(0, 3, GL33.GL_FLOAT, false, 4*6, 0);
+		GL33.glVertexAttribPointer(0, 2, GL33.GL_FLOAT, false, 4*9, 0);
 		
 		GL33.glEnableVertexAttribArray(1);
-		GL33.glVertexAttribPointer(1, 2, GL33.GL_FLOAT, false, 4*6, 12);
+		GL33.glVertexAttribPointer(1, 2, GL33.GL_FLOAT, false, 4*9, 8);
 		
 		GL33.glEnableVertexAttribArray(2);
-		GL33.glVertexAttribPointer(2, 1, GL33.GL_FLOAT, false, 4*6, 20);
+		GL33.glVertexAttribPointer(2, 1, GL33.GL_FLOAT, false, 4*9, 16);
+		
+		GL33.glEnableVertexAttribArray(3);
+		GL33.glVertexAttribPointer(3, 4, GL33.GL_FLOAT, false, 4*9, 20);
+		
 //		GL33.glBindBuffer(GL33.GL_ARRAY_BUFFER, 0);
 		
 		//create index buffer

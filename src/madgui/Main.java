@@ -20,18 +20,21 @@ public class Main {
 		layout.setScalingFactor(0.05f);
 		layout.setSubTexture(0, 0, 0.25f, 0.25f);
 		layout.setTexture(1);
+		layout.setBgColour(0.0f, 0.0f, 0.2f, 1.0f);
 //		
 		PushButton pushButton = new PushButton();
 		layout.setChild(pushButton);
 		pushButton.push(renderer.mUIQuadVector);
-		pushButton.setSubTexture(0, 1, 0.25f, 0.25f);
+		pushButton.setSubTexture(0, 0, 0.25f, 0.25f);
 		pushButton.setTexture(1);
+		pushButton.setBgColour(0.2f, 0.0f, 0.0f, 1.0f);
 		
 		PushButton pushButton2 = new PushButton();
 		layout.setChild(pushButton2);
 		pushButton2.push(renderer.mUIQuadVector);
-		pushButton2.setSubTexture(0, 1, 0.25f, 0.25f);
+		pushButton2.setSubTexture(0, 0, 0.25f, 0.25f);
 		pushButton2.setTexture(1);
+		pushButton2.setBgColour(0.2f, 0.0f, 0.0f, 1.0f);
 		
 		Texture texture = new Texture("images/Theme.png",1);
 		renderer.mTextureVector.add(texture);

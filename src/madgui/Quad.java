@@ -15,10 +15,10 @@ public class Quad {
 		this.width=width;
 		this.height=height;
 		float[] tempVerts= {
-			x,y,0.0f,0.0f,0.0f,0.0f,
-			x+width,y,0.0f,1.0f,0.0f,0.0f,
-			x,y-height,0.0f,0.0f,1.0f,0.0f,
-			x+width,y-height,0.0f,1.0f,1.0f,0.0f
+			x,y, 0.0f,0.0f, 0.0f, 1.0f,1.0f,1.0f,1.0f,
+			x+width,y, 1.0f,0.0f, 0.0f, 1.0f,1.0f,1.0f,1.0f,
+			x,y-height, 0.0f,1.0f, 0.0f, 1.0f,1.0f,1.0f,1.0f,
+			x+width,y-height, 1.0f,1.0f, 0.0f, 1.0f,1.0f,1.0f,1.0f
 		};
 		
 	
@@ -45,14 +45,23 @@ public class Quad {
 	
 	
 	public void setTexture(float textureSlot) {
-		mVertices[5]=mVertices[11]=mVertices[17]=mVertices[23]=textureSlot;
+		mVertices[4]=mVertices[4+9]=mVertices[4+18]=mVertices[4+27]=textureSlot;
 	}
 	
 	public void setCoordinates(float x,float y,float width, float height) {
-		mVertices[3]=x; mVertices[4]=y;
-		mVertices[3+6]=x+width; mVertices[4+6]=y;
-		mVertices[3+12]=x; mVertices[4+12]=y+height;
-		mVertices[3+18]=x+width; mVertices[4+18]=y+height;
+		mVertices[2]=x; mVertices[3]=y;
+		mVertices[2+9]=x+width; mVertices[3+9]=y;
+		mVertices[2+18]=x; mVertices[3+18]=y+height;
+		mVertices[2+27]=x+width; mVertices[3+27]=y+height;
+	}
+	
+	public void setBgColour(float r,float g, float b,float a) {
+		for(int i=5;i<=32;i+=9) {
+			mVertices[i]=r;
+			mVertices[i+1]=g;
+			mVertices[i+2]=b;
+			mVertices[i+3]=a;
+		}
 	}
 	
 	

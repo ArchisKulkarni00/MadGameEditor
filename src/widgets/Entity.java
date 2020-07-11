@@ -79,6 +79,10 @@ public class Entity {
 		mQuad.setTexture((float)idx);
 	}
 	
+	public void setBgColour(float r,float g, float b,float a) {
+		mQuad.setBgColour(r, g, b, a);;
+	}
+	
 //	push the entity to entity vector
 	public void push(Vector<Quad> mQuadVector) {
 		mQuadVector.add(mQuad);
